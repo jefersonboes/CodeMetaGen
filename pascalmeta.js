@@ -33,19 +33,19 @@ function PascalMeta () {
 	    */
 
 	    var str = ident + 'function Get' + field + ': ' + typeName + ';\n';
-	    
+
 	    return str;
 	}
 
-	var createGet = function (field, typeName)	{
+	var createGet = function (classType, field, typeName)	{
 	    /*
-	    function GetField: Type;
+	    function TClass.GetField: Type;
 	    begin
 	      Result := FField;
 	    end;
 	    */
 
-	    var str = 'function Get' + field + ': ' + typeName + ';\n';
+	    var str = 'function ' + classType + '.Get' + field + ': ' + typeName + ';\n';
 	    str += 'begin\n';
 	    str += ident + 'Result := F' + field + ';\n';
 	    str += 'end;\n';
@@ -63,15 +63,15 @@ function PascalMeta () {
 	    return str;
 	}
 
-	var createSet = function (field, typeName) {
+	var createSet = function (classType, field, typeName) {
 	    /*
-	    procedure SetField(const Value: Type);
+	    procedure TClass.SetField(const Value: Type);
 	    begin
 	        FField := Value;
 	    end;
 	    */
 
-	    var str = 'procedure Set' + field + '(const Value: ' +  typeName + ');\n';
+	    var str = 'procedure ' + classType + '.Set' + field + '(const Value: ' +  typeName + ');\n';
 	    str += 'begin\n';
 	    str += ident + 'F' + field + ' := Value;\n';
 	    str += 'end;\n';
@@ -84,12 +84,12 @@ function PascalMeta () {
 	    property Field: Type read GetField write SetField;
 	    */
 
-	    var str = ident + 'property ' + field + ': ' + typeName + ' read Get' + field + ' write Set' + field  + ';\n';    
+	    var str = ident + 'property ' + field + ': ' + typeName + ' read Get' + field + ' write Set' + field  + ';\n';
 
 	    return str;
 	}
 
-	var createFieldsBlock = function (fields, functionCall, breakLineContent) {
+	var createFieldsBlock = function (fields, functionCall, breakLineContent, classType) {
 	    var str = '';
 
 	    for (var i = 0; i < fields.length; i++) {
@@ -105,7 +105,10 @@ function PascalMeta () {
 	                str += '\n';
 	        }
 
-	        str += functionCall(name, typeName);
+					if (classType != undefined)
+							str += functionCall(classType, name, typeName);
+					else
+	        		str += functionCall(name, typeName);
 	    }
 
 	    return str;
@@ -140,11 +143,11 @@ function PascalMeta () {
 	    str += 'end;\n';
 
 	    str += '\n';
-	    str += '{T' + className + '}\n';
+	    str += '{T' + className + '}\n\n';
 
-	    str += createFieldsBlock(fields, createGet, true);
+	    str += createFieldsBlock(fields, createGet, true, 'T' + className);
 	    str += '\n';
-	    str += createFieldsBlock(fields, createSet, true);
+	    str += createFieldsBlock(fields, createSet, true, 'T' + className);
 
 	    return str
 	}
@@ -167,5 +170,5 @@ function PascalMeta () {
 	    str += 'end;\n';
 
 	    return str
-	}	
+	}
 }
