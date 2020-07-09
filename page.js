@@ -36,14 +36,14 @@ window.onload = function() {
 	   	else
 	   		var meta = new JavaMeta();
 
-	    if (ckClass.checked)
-	    	str += meta.createClass(classname.value, fieldsArray);
-
 		if (ckInteface.checked) {
+			str += meta.createInterface(classname.value, fieldsArray);
+		}
+
+	    if (ckClass.checked) {
 			if (str.length > 0)
 				str += '\n';
-
-	    	str += meta.createInterface(classname.value, fieldsArray);
+			str += meta.createClass(classname.value, fieldsArray);
 		}
 
 	    output.value = str;

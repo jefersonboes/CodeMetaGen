@@ -32,20 +32,21 @@
 	<body>
 		<label>class name:</label>
 		<input id="classname" placeholder="class name" value="Class">
-		<input type="checkbox" id="ckClass" checked>class</input>
 		<input type="checkbox" id="ckInteface">interface</input>
-		 <select id="language">
+		<input type="checkbox" id="ckClass" checked>class</input>
+		<select id="language">
 			<option value="objectPascal">Object pascal</option>
   			<option value="java">Java</option>
 		</select>
+		<button id="butGen">Gen</button>
 		</br>
 
 		<label>fields:</label>
 		</br>
-		<textarea rows="10" cols="50" id="fields" placeholder="fieldName typeName"></textarea>
+		<textarea rows="20" cols="100" id="fields" placeholder="fieldName typeName"></textarea>
 		</br>
-		<button id="butGen">Gen</button>
+		<textarea rows="50" cols="100" id="output"></textarea>
 		</br>
-		<textarea rows="10" cols="50" id="output"></textarea>
+		<label>Updated 2020-07-09</label>
 	</body>
 </html>
