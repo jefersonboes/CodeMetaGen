@@ -25,16 +25,18 @@ window.onload = function() {
 	var output = document.getElementById("output");
 	var ckClass = document.getElementById("ckClass");
 	var ckInteface = document.getElementById("ckInteface");
+	var ckPreserveFieldCase = document.getElementById("ckPreserveFieldCase");
 	var language = document.getElementById("language");
 
 	butGen.onclick = function(e) {
 	    var fieldsArray = parseCreateFields(fields.value);
 	    var str = '';
 
-	    if (language.value == 'objectPascal')
-	    	var meta = new PascalMeta();
-	   	else
-	   		var meta = new JavaMeta();
+	    if (language.value == 'objectPascal') {
+			var meta = new PascalMeta();
+			meta.setPreserveFieldCase(ckPreserveFieldCase.checked);
+		} else
+			var meta = new JavaMeta();
 
 		if (ckInteface.checked) {
 			str += meta.createInterface(classname.value, fieldsArray);

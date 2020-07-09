@@ -21,6 +21,8 @@ function PascalMeta () {
 
 	const ident = '  ';
 
+	this.preserveFieldCase = false;
+
 	var createAttribute = function (field, typeName) {
 	    var str = ident + 'F' + field + ': ' + typeName + ';\n';
 
@@ -89,7 +91,7 @@ function PascalMeta () {
 	    return str;
 	}
 
-	var createFieldsBlock = function (fields, functionCall, breakLineContent, classType) {
+	this.createFieldsBlock = function (fields, functionCall, breakLineContent, classType) {
 	    var str = '';
 
 	    for (var i = 0; i < fields.length; i++) {
@@ -97,7 +99,8 @@ function PascalMeta () {
 	        var name = field[0];
 	        var typeName = field[1];
 
-	        name = camelCase(name);
+			if (!this.preserveFieldCase)
+	        	name = camelCase(name);
 	        typeName = camelCase(typeName);
 
 	        if (breakLineContent) {
@@ -137,19 +140,19 @@ function PascalMeta () {
 
 	    var str = 'T' + className + ' = class' + (withInterface ? '(TInterfacedObject, ' + interfaceName + ')' : '') + '\n';
 	    str += 'private\n';
-	    str += createFieldsBlock(fields, createAttribute);
-	    str += createFieldsBlock(fields, createGetSignature);
-	    str += createFieldsBlock(fields, createSetSignature);
+	    str += this.createFieldsBlock(fields, createAttribute);
+	    str += this.createFieldsBlock(fields, createGetSignature);
+	    str += this.createFieldsBlock(fields, createSetSignature);
 	    str += 'public\n';
-	    str += createFieldsBlock(fields, createProperty);
+	    str += this.createFieldsBlock(fields, createProperty);
 	    str += 'end;\n';
 
 	    str += '\n';
 	    str += '{T' + className + '}\n\n';
 
-	    str += createFieldsBlock(fields, createGet, true, 'T' + className);
+	    str += this.createFieldsBlock(fields, createGet, true, 'T' + className);
 	    str += '\n';
-	    str += createFieldsBlock(fields, createSet, true, 'T' + className);
+	    str += this.createFieldsBlock(fields, createSet, true, 'T' + className);
 
 	    return str
 	}
@@ -166,11 +169,15 @@ function PascalMeta () {
 		interfaceName = camelCase(interfaceName);
 
 	    var str = 'I' + interfaceName + ' = interface\n';
-	    str += createFieldsBlock(fields, createGetSignature);
-	    str += createFieldsBlock(fields, createSetSignature);
-	    str += createFieldsBlock(fields, createProperty);
+	    str += this.createFieldsBlock(fields, createGetSignature);
+	    str += this.createFieldsBlock(fields, createSetSignature);
+	    str += this.createFieldsBlock(fields, createProperty);
 	    str += 'end;\n';
 
 	    return str
+	}
+
+	this.setPreserveFieldCase = function (preserveFieldCase) {
+		this.preserveFieldCase = preserveFieldCase;
 	}
 }
