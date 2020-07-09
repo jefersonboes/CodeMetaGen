@@ -43,7 +43,7 @@ window.onload = function() {
 	    if (ckClass.checked) {
 			if (str.length > 0)
 				str += '\n';
-			str += meta.createClass(classname.value, fieldsArray);
+			str += meta.createClass(classname.value, fieldsArray, ckInteface.checked);
 		}
 
 	    output.value = str;

@@ -114,7 +114,7 @@ function PascalMeta () {
 	    return str;
 	}
 
-	this.createClass = function (className, fields) {
+	this.createClass = function (className, fields, withInterface) {
 	    /*
 	    TClass = class
 	    private
@@ -131,9 +131,11 @@ function PascalMeta () {
 	    gets
 	    */
 
-	    className = camelCase(className);
+		className = camelCase(className);
+		if (withInterface)
+			var interfaceName = 'I' + camelCase(className);
 
-	    var str = 'T' + className + ' = class\n';
+	    var str = 'T' + className + ' = class' + (withInterface ? '(TInterfacedObject, ' + interfaceName + ')' : '') + '\n';
 	    str += 'private\n';
 	    str += createFieldsBlock(fields, createAttribute);
 	    str += createFieldsBlock(fields, createGetSignature);
@@ -161,7 +163,7 @@ function PascalMeta () {
 	    end;
 	    */
 
-	    interfaceName = camelCase(interfaceName);
+		interfaceName = camelCase(interfaceName);
 
 	    var str = 'I' + interfaceName + ' = interface\n';
 	    str += createFieldsBlock(fields, createGetSignature);
