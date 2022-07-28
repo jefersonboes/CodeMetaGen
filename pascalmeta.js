@@ -100,8 +100,8 @@ function PascalMeta () {
 	        var typeName = field[1];
 
 			if (!this.preserveFieldCase)
-	        	name = camelCase(name);
-	        typeName = camelCase(typeName);
+	        	name = pascalCase(name);
+	        typeName = pascalCase(typeName);
 
 	        if (breakLineContent) {
 	            if (str.length > 0)
@@ -134,9 +134,9 @@ function PascalMeta () {
 	    gets
 	    */
 
-		className = camelCase(className);
+		className = pascalCase(className);
 		if (withInterface)
-			var interfaceName = 'I' + camelCase(className);
+			var interfaceName = 'I' + pascalCase(className);
 
 	    var str = 'T' + className + ' = class' + (withInterface ? '(TInterfacedObject, ' + interfaceName + ')' : '') + '\n';
 	    str += 'private\n';
@@ -166,7 +166,7 @@ function PascalMeta () {
 	    end;
 	    */
 
-		interfaceName = camelCase(interfaceName);
+		interfaceName = pascalCase(interfaceName);
 
 	    var str = 'I' + interfaceName + ' = interface\n';
 	    str += this.createFieldsBlock(fields, createGetSignature);

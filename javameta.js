@@ -111,7 +111,7 @@ function JavaMeta () {
 	    }
 	    */
 
-	    className = camelCase(className);
+	    className = pascalCase(className);
 
 	    var str = 'class ' + className + '\n';
 	    str += '{\n';
@@ -134,7 +134,7 @@ function JavaMeta () {
 	    }
 	    */
 
-	    interfaceName = camelCase(interfaceName);
+	    interfaceName = pascalCase(interfaceName);
 
 	    var str = 'interface ' + interfaceName + '\n';
 	    str += '{\n';

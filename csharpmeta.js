@@ -95,7 +95,7 @@ function CSharpMeta () {
 		if (dbTypeControl !== '')
 			str += dbTypeControl + ']\n';
 
-	    str += ident + 'public ' + translateType(typeName) + ' ' + camelCase(field) + ' { get; set; }\n';
+	    str += ident + 'public ' + translateType(typeName) + ' ' + pascalCase(field) + ' { get; set; }\n';
 	    return str;
 	}
 
@@ -126,7 +126,7 @@ function CSharpMeta () {
 
 	this.createClass = function (className, fields, gerarInterface, tablename) {
 
-	    className = camelCase(className);
+	    className = pascalCase(className);
 
 	    var str = '';
 		if (tablename !== '')

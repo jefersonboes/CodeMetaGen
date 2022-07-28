@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-function camelCase(str)
+function pascalCase(str)
 {
 	var newStr = '';
 
