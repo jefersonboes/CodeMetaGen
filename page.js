@@ -19,6 +19,7 @@
 
 window.onload = function() {
 	var classname = document.getElementById("classname");
+	var tablename = document.getElementById("tablename");
 	
 	var fields = document.getElementById("fields");
 	var butGen = document.getElementById("butGen");
@@ -28,6 +29,16 @@ window.onload = function() {
 	var ckPreserveFieldCase = document.getElementById("ckPreserveFieldCase");
 	var language = document.getElementById("language");
 
+	language.onchange = function(e) {
+		ckInteface.disabled = language.value === 'csharp';
+		ckPreserveFieldCase.disabled = ckInteface.disabled;
+
+		if (ckPreserveFieldCase.disabled)
+			ckPreserveFieldCase.checked = false;
+	}
+
+	language.onchange();
+
 	butGen.onclick = function(e) {
 	    var fieldsArray = parseCreateFields(fields.value);
 	    var str = '';
@@ -35,8 +46,11 @@ window.onload = function() {
 	    if (language.value == 'objectPascal') {
 			var meta = new PascalMeta();
 			meta.setPreserveFieldCase(ckPreserveFieldCase.checked);
-		} else
+		} else if (language.value == 'java') {
 			var meta = new JavaMeta();
+		} else {
+			var meta = new CSharpMeta();
+		}
 
 		if (ckInteface.checked) {
 			str += meta.createInterface(classname.value, fieldsArray);
@@ -45,7 +59,7 @@ window.onload = function() {
 	    if (ckClass.checked) {
 			if (str.length > 0)
 				str += '\n';
-			str += meta.createClass(classname.value, fieldsArray, ckInteface.checked);
+			str += meta.createClass(classname.value, fieldsArray, ckInteface.checked, tablename.value);
 		}
 
 	    output.value = str;

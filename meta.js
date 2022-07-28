@@ -38,11 +38,23 @@ function parseCreateFields (strFields)
 
         line = line.split(' ');
 
+        let ignoreBlocks = false;
         for (var j = 0; j < line.length; j++) {
             if (line[j] != undefined) {
                 var part = line[j];
                 part = trim(part);
-                field.push(part);
+
+                if (part.indexOf('[') !== -1) {
+                    ignoreBlocks = true;
+                    continue;
+                }
+                if (part.indexOf(']') !== -1) {
+                    ignoreBlocks = false;
+                    continue;
+                }
+
+                if (!ignoreBlocks)
+                    field.push(part);
             }
         }
 

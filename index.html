@@ -17,6 +17,7 @@
  * Boston, MA 02111-1307, USA.
  -->
 
+ <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -26,28 +27,31 @@
 		<script type="text/javascript" src="meta.js"></script>
 		<script type="text/javascript" src="pascalmeta.js"></script>
 		<script type="text/javascript" src="javameta.js"></script>
+		<script type="text/javascript" src="csharpmeta.js"></script>
 		<script type="text/javascript" src="page.js"></script>
 	</head>
 
 	<body>
-		<label>class name:</label>
-		<input id="classname" placeholder="class name" value="Class">
+		<label>class/table name:</label>
+		<input id="classname" placeholder="class name" value="">
+		<input id="tablename" placeholder="table name" value="">
 		<input type="checkbox" id="ckInteface" checked>interface</input>
 		<input type="checkbox" id="ckClass" checked>class</input>
 		<input type="checkbox" id="ckPreserveFieldCase" checked>preserve case</input>
 		<select id="language">
 			<option value="objectPascal">Object pascal</option>
   			<option value="java">Java</option>
+			<option value="csharp">C# Entity</option>
 		</select>
 		<button id="butGen">Gen</button>
 		</br>
 
 		<label>fields:</label>
 		</br>
-		<textarea rows="20" cols="100" id="fields" placeholder="fieldName typeName"></textarea>
+		<textarea rows="20" cols="150" id="fields" placeholder="fieldName typeName"></textarea>
 		</br>
-		<textarea rows="50" cols="100" id="output"></textarea>
+		<textarea rows="50" cols="150" id="output"></textarea>
 		</br>
-		<label>Updated 2020-07-09</label>
+		<label>Updated 2022-07-27</label>
 	</body>
 </html>
