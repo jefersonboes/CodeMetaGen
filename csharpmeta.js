@@ -61,7 +61,7 @@ function CSharpMeta () {
 				else
 					dbTypeControl += ident + '[';
 
-				dbTypeControl += 'Column(TypeName = "DECIMAL(' + typeSize + '")';
+				dbTypeControl += 'Column(TypeName = "DECIMAL(' + typeSize + ')")';
 			}
 		}
 
