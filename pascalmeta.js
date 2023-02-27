@@ -81,12 +81,15 @@ function PascalMeta () {
 	    return str;
 	}
 
-	var createProperty = function (field, typeName)	{
+	var createProperty = function (field, typeName, attr)	{
 	    /*
 	    property Field: Type read GetField write SetField;
 	    */
 
-	    var str = ident + 'property ' + field + ': ' + typeName + ' read Get' + field + ' write Set' + field  + ';\n';
+		var str = '';
+		if (attr != undefined)
+	    	str += ident + '[' + attr + ']\n';
+		str += ident + 'property ' + field + ': ' + typeName + ' read Get' + field + ' write Set' + field  + ';\n';
 
 	    return str;
 	}
@@ -98,6 +101,7 @@ function PascalMeta () {
 	        var field = fields[i];
 	        var name = field[0];
 	        var typeName = field[1];
+			var attr = field[2];
 
 			if (!this.preserveFieldCase)
 	        	name = pascalCase(name);
@@ -108,10 +112,10 @@ function PascalMeta () {
 	                str += '\n';
 	        }
 
-					if (classType != undefined)
-							str += functionCall(classType, name, typeName);
-					else
-	        		str += functionCall(name, typeName);
+			if (classType != undefined)
+				str += functionCall(classType, name, typeName);
+			else
+				str += functionCall(name, typeName, attr);
 	    }
 
 	    return str;
