@@ -23,16 +23,20 @@ function PascalMeta () {
 
 	this.preserveFieldCase = false;
 
-	var createAttribute = function (field, typeName) {
+	var createAttribute = function (classType, field, typeName) {
+		_ = classType;
+
 	    var str = ident + 'F' + field + ': ' + typeName + ';\n';
 
 	    return str;
 	}
 
-	var createGetSignature = function (field, typeName)	{
+	var createGetSignature = function (classType, field, typeName)	{
 	    /*
 	    function GetField: Type;
 	    */
+
+		_ = classType;
 
 	    var str = ident + 'function Get' + field + ': ' + typeName + ';\n';
 
@@ -55,10 +59,12 @@ function PascalMeta () {
 	    return str;
 	}
 
-	var createSetSignature = function (field, typeName)	{
+	var createSetSignature = function (classType, field, typeName)	{
 	    /*
 	    procedure SetField(const Value: Type);
 	    */
+
+		_ = classType;
 
 	    var str = ident + 'procedure Set' + field + '(const Value: ' +  typeName + ');\n';
 
@@ -81,13 +87,13 @@ function PascalMeta () {
 	    return str;
 	}
 
-	var createProperty = function (field, typeName, attr)	{
+	var createProperty = function (classType, field, typeName, attr) {
 	    /*
 	    property Field: Type read GetField write SetField;
 	    */
 
 		var str = '';
-		if (attr != undefined)
+		if (attr != undefined && classType != undefined)
 	    	str += ident + '[' + attr + ']\n';
 		str += ident + 'property ' + field + ': ' + typeName + ' read Get' + field + ' write Set' + field  + ';\n';
 
@@ -112,10 +118,7 @@ function PascalMeta () {
 	                str += '\n';
 	        }
 
-			if (classType != undefined)
-				str += functionCall(classType, name, typeName);
-			else
-				str += functionCall(name, typeName, attr);
+			str += functionCall(classType, name, typeName, attr);
 	    }
 
 	    return str;
@@ -148,7 +151,7 @@ function PascalMeta () {
 	    str += this.createFieldsBlock(fields, createGetSignature);
 	    str += this.createFieldsBlock(fields, createSetSignature);
 	    str += 'public\n';
-	    str += this.createFieldsBlock(fields, createProperty);
+	    str += this.createFieldsBlock(fields, createProperty, false, 'T' + className);
 	    str += 'end;\n';
 
 	    str += '\n';
